@@ -1,0 +1,7 @@
+app:
+  in:
+    datasource:
+      username: ${lgc_lgnrn_in_admin}
+      password: ${password_in_db}
+      url: jdbc:postgresql://local:5432/lgc_lgnrn_in
+      driverClassName: org.postgresql.Driver
