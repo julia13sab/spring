@@ -1,6 +1,7 @@
 package user.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 import user.model.User;
 import user.persistence.UserDao;
 
@@ -8,6 +9,7 @@ import user.persistence.UserDao;
 import java.util.List;
 
 @RequiredArgsConstructor
+@Service
 public class UserService {
 
     private final UserDao userDao;

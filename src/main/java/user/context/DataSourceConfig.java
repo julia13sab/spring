@@ -11,7 +11,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 
 @Configuration
-@ComponentScan(basePackages = {"user"})
 public class DataSourceConfig {
 
     @Bean(destroyMethod = "close")
@@ -39,13 +38,4 @@ public class DataSourceConfig {
         return new JdbcTemplate(dataSource());
     }
 
-    @Bean
-    public UserService userService() {
-        return new UserService(userDao()); // Предоставляем зависимость UserDao
-    }
-
-    @Bean
-    public UserDao userDao() {
-        return new UserDao(jdbcTemplate()); // Реализуйте этот конструктор в вашем UserDao
-    }
 }

@@ -1,5 +1,6 @@
 package user.runner;
 
+import org.springframework.context.annotation.ComponentScan;
 import user.context.DataSourceConfig;
 import user.model.User;
 import user.service.UserService;
@@ -11,7 +12,7 @@ public class StartContext {
 
     public static void main(String[] args) {
 
-        // Создаем контекст
+
         ApplicationContext context = new AnnotationConfigApplicationContext(DataSourceConfig.class);
 
         UserService userService = context.getBean(UserService.class);

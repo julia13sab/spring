@@ -1,12 +1,15 @@
 package user.persistence;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import user.model.User;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 
 import java.util.List;
 
+@Component
 @RequiredArgsConstructor
 public class UserDao {
 
