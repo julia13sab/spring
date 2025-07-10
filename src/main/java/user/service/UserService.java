@@ -1,9 +1,10 @@
 package user.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import user.model.User;
-import user.persistence.UserDao;
+import user.repository.UserRepository;
 
 
 import java.util.List;
@@ -12,26 +13,28 @@ import java.util.List;
 @Service
 public class UserService {
 
-    private final UserDao userDao;
+    @Autowired
+    private final UserRepository userRepository;
 
-    public int createUser(User user) {
-        if(user.getUsername().isEmpty()) throw new IllegalArgumentException("Имя пользователя не должно быть пустым!");
-        return userDao.create(user);
+    public User createUser(User user) {
+        if (user.getUsername().isEmpty()) throw new IllegalArgumentException("Имя пользователя не должно быть пустым!");
+        return userRepository.save(user);
     }
 
     public List<User> getAllUsers() {
-        return userDao.findAll();
+        return userRepository.findAll();
     }
 
-    public User getUserById(long id) {
-        return userDao.findById(id);
+    public User getUserById(Integer id) {
+        return userRepository.getById(id);
     }
 
-    public int updateUser(User updatedUser) {
-        return userDao.update(updatedUser);
+    public User updateUser(User updatedUser) {
+        return userRepository.save(updatedUser);
     }
 
-    public int deleteUser(long id) {
-        return userDao.delete(id);
+    public boolean deleteUser(User user) {
+        userRepository.delete(user);
+        return true;
     }
 }
