@@ -1,6 +1,7 @@
 package user.model;
 
 import lombok.*;
+import user.dto.ProductTypeEnum;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -12,7 +13,7 @@ import java.math.BigDecimal;
 @Entity
 @Builder
 @Table(name = "users", schema = "lgc_lgnrn_in")
-public class Product {
+public class ProductEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -25,10 +26,5 @@ public class Product {
     private BigDecimal balance;
 
     @Enumerated(EnumType.STRING)
-    private ProductType type;
-
-    public enum ProductType {
-        ACCOUNT,
-        CARD
-    }
+    private ProductTypeEnum type;
 }

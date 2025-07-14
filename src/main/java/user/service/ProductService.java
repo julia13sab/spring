@@ -1,24 +1,32 @@
 package user.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import user.model.Product;
+import user.dto.ProductDTO;
+import user.exception.ProductNotFoundException;
+import user.mapper.ProductMapper;
 import user.repository.ProductRepository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class ProductService {
 
-    @Autowired
-    private ProductRepository productRepository;
+    private final ProductRepository productRepository;
+    private final ProductMapper productMapper;
 
-    public List<Product> getProductsByUserId(Long userId) {
-        return productRepository.findByUserId(userId);
+    public List<ProductDTO> getProductsByUserId(Long userId) {
+        return productRepository.findByUserId(userId).stream()
+                .map(productMapper::toDto)
+                .toList();
     }
 
-    public Optional<Product> getProductById(Long productId) {
-        return productRepository.findById(productId);
+    public ProductDTO getProductById(Long productId) {
+        final var optionalProduct = productRepository.findById(productId);
+        if (optionalProduct.isEmpty()) {
+            throw new ProductNotFoundException(String.format("Продукт с id = %s не найден!", productId));
+        }
+        return productMapper.toDto(optionalProduct.get());
     }
 }

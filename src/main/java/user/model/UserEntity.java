@@ -6,23 +6,21 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.List;
 
-@ToString
-@EqualsAndHashCode
-@AllArgsConstructor
-@NoArgsConstructor
+@Data
 @Entity
 @Builder
 @Table(name = "users", schema = "lgc_lgnrn_in")
-public class User {
+@AllArgsConstructor
+public class UserEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
     @Column(name = "username")
-    private String username;
+    private String userName;
 
     @OneToMany(mappedBy = "user")
-    private List<Product> products;
+    private List<ProductEntity> products;
 
 }

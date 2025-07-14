@@ -1,32 +1,32 @@
 package user.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import user.model.Product;
+import user.dto.ProductDTO;
 import user.service.ProductService;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/product")
+@RequiredArgsConstructor
 public class ProductController {
 
-    @Autowired
-    private ProductService productService;
+    private final ProductService productService;
 
     @GetMapping("/user/{userId}")
-    public List<Product> getProductsByUserId(@PathVariable Long userId) {
+    public List<ProductDTO> getProductsByUserId(@PathVariable Long userId) {
         return productService.getProductsByUserId(userId);
     }
 
     @GetMapping("/{productId}")
-    public ResponseEntity<Product> getProductById(@PathVariable Long productId) {
-        return productService.getProductById(productId)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<ProductDTO> getProductById(@PathVariable Long productId) {
+        return new ResponseEntity<>(productService.getProductById(productId), HttpStatus.OK);
+
     }
 }
