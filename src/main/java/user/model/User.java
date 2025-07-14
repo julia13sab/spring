@@ -4,6 +4,7 @@ package user.model;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 @ToString
 @EqualsAndHashCode
@@ -20,5 +21,8 @@ public class User {
 
     @Column(name = "username")
     private String username;
+
+    @OneToMany(mappedBy = "user")
+    private List<Product> products;
 
 }
