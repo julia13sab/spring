@@ -3,9 +3,10 @@ package user.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import user.model.User;
+import user.dto.UserDTO;
+import user.mapper.UserMapper;
+import user.model.UserEntity;
 import user.repository.UserRepository;
-
 
 import java.util.List;
 
@@ -16,24 +17,26 @@ public class UserService {
     @Autowired
     private final UserRepository userRepository;
 
-    public User createUser(User user) {
-        if (user.getUsername().isEmpty()) throw new IllegalArgumentException("Имя пользователя не должно быть пустым!");
-        return userRepository.save(user);
+    private final UserMapper userMapper;
+
+    public UserDTO createUser(UserEntity user) {
+        if (user.getUserName().isEmpty()) throw new IllegalArgumentException("Имя пользователя не должно быть пустым!");
+        return userMapper.toDto(userRepository.save(user));
     }
 
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
+    public List<UserDTO> getAllUsers() {
+        return userRepository.findAll().stream().map(userMapper::toDto).toList();
     }
 
-    public User getUserById(Integer id) {
-        return userRepository.getById(id);
+    public UserDTO getUserById(Integer id) {
+        return userMapper.toDto(userRepository.getById(id));
     }
 
-    public User updateUser(User updatedUser) {
-        return userRepository.save(updatedUser);
+    public UserDTO updateUser(UserEntity updatedUser) {
+        return userMapper.toDto(userRepository.save(updatedUser));
     }
 
-    public boolean deleteUser(User user) {
+    public boolean deleteUser(UserEntity user) {
         userRepository.delete(user);
         return true;
     }
