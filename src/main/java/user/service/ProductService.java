@@ -22,11 +22,24 @@ public class ProductService {
                 .toList();
     }
 
+    public ProductDTO getProductByUserId(Long userId, Long productId) {
+        final var products = getProductsByUserId(userId);
+
+        return products.stream().filter(product-> product.getId().equals(productId)).findFirst()
+                .orElseThrow(() -> new ProductNotFoundException(String.format("Продукт с id = %s не найден!", productId)));
+    }
+
     public ProductDTO getProductById(Long productId) {
         final var optionalProduct = productRepository.findById(productId);
         if (optionalProduct.isEmpty()) {
             throw new ProductNotFoundException(String.format("Продукт с id = %s не найден!", productId));
         }
         return productMapper.toDto(optionalProduct.get());
+    }
+
+    public ProductDTO updateProduct(ProductDTO productDTO) {
+        final var updatedProduct = productRepository.save(productMapper.toEntity(productDTO));
+
+        return productMapper.toDto(updatedProduct);
     }
 }
