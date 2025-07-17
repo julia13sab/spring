@@ -1,9 +1,12 @@
 package user.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import user.dto.ProductDTO;
 import user.service.ProductService;
 
@@ -27,12 +30,12 @@ public class ProductController {
     }
 
     @GetMapping("/{productId}")
-    public ResponseEntity<ProductDTO> getProductById(@PathVariable Long productId) {
-        return new ResponseEntity<>(productService.getProductById(productId), HttpStatus.OK);
+    public ProductDTO getProductById(@PathVariable Long productId) {
+        return productService.getProductById(productId);
     }
 
     @PatchMapping
-    public ResponseEntity<ProductDTO> updateProduct(@RequestBody ProductDTO product) {
-        return new ResponseEntity<>(productService.updateProduct(product), HttpStatus.OK);
+    public ProductDTO updateProduct(@RequestBody ProductDTO product) {
+        return productService.updateProduct(product);
     }
 }
