@@ -1,0 +1,4 @@
+product:
+  url: http://localhost/product
+  readTimeout: 2000
+  connectTimeout: 20000
